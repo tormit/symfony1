@@ -110,11 +110,15 @@ class Doctrine_Data_Import extends Doctrine_Data
     public function doImport($append = false)
     {
         $array = $this->doParsing();
+        printf("Finished parsing files.\n");
 
-        if ( ! $append) {
+        if (!$append) {
+            printf("Purging data...");
             $this->purge(array_reverse(array_keys($array)));
+            printf("done.\n");
         }
 
+        printf("Processing and saving data...\n");
         $this->_loadData($array);
     }
 
@@ -342,6 +346,9 @@ class Doctrine_Data_Import extends Doctrine_Data
                 foreach ($this->_importedObjects as $obj) {
 
                     if ($obj instanceof $model) {
+                        if (method_exists($obj, '__toString')) {
+                            printf("Saving: %s (%s)\n", $model, $obj);
+                        }
                         $obj->save();
                     }
                 }
