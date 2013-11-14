@@ -83,7 +83,7 @@ class Doctrine_Data_Import extends Doctrine_Data
                 } else if (is_dir($dir)) {
                     $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir),
                                                             RecursiveIteratorIterator::LEAVES_ONLY);
-                    $filesOrdered = array();                                        
+                    $filesOrdered = array();
                     foreach ($it as $file) {
                         $filesOrdered[] = $file;
                     }
@@ -96,6 +96,14 @@ class Doctrine_Data_Import extends Doctrine_Data
                         }
                     }
                 }
+            }
+        }
+        //hack for disabling cascade :(
+        foreach($array as $key => $value){
+            if(strpos($key,'__doNotMerge')){
+                $realKey = str_replace('__doNotMerge','',$key);
+                $array[$realKey] = $array[$key];
+                unset($array[$key]);
             }
         }
 
