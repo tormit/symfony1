@@ -742,7 +742,12 @@ class sfViewCacheManager
     }
     ksort($parameters);
 
-    return md5(serialize($parameters));
+      // By-pass for bug, when sometimes serialize interface gives exception. Tormi 10th December 2013.
+      try {
+          return md5(serialize($parameters));
+      } catch (Exception $e) {
+          return md5(json_encode($parameters));
+      }
   }
 
   /**
