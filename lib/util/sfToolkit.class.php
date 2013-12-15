@@ -351,16 +351,35 @@ class sfToolkit
     return is_string($value) ? preg_replace_callback('/%(.+?)%/', create_function('$v', 'return sfConfig::has(strtolower($v[1])) ? sfConfig::get(strtolower($v[1])) : "%{$v[1]}%";'), $value) : $value;
   }
 
-  /**
-   * Returns subject replaced with regular expression matchs
-   *
-   * @param mixed $search        subject to search
-   * @param array $replacePairs  array of search => replace pairs
-   */
-  public static function pregtr($search, $replacePairs)
-  {
-    return preg_replace(array_keys($replacePairs), array_values($replacePairs), $search);
-  }
+    /**
+     * Returns subject replaced with regular expression matchs
+     *
+     * @param mixed $search subject to search
+     * @param array $replacePairs array of search => replace pairs
+     * @return string
+     */
+    public static function pregtr($search, $replacePairs)
+    {
+        return preg_replace(array_keys($replacePairs), array_values($replacePairs), $search);
+    }
+
+    /**
+     * Returns subject replaced with regular expression matchs
+     *
+     * @param mixed $search subject to search
+     * @param array $replacePairs array of search_pattern => callback pairs
+     * @return string
+     * @author Tormi Talv, 15th December 2013
+     */
+    public static function pregtr_callback($search, $replacePairs)
+    {
+        $result = $search;
+        foreach ($replacePairs as $pattern => $callback) {
+            $result = preg_replace_callback($pattern, $callback, $result);
+        }
+
+        return $result;
+    }
 
   /**
    * Checks if array values are empty

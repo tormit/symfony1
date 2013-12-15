@@ -25,14 +25,23 @@ class sfInflector
    *
    * @return string Camelized string.
    */
-  public static function camelize($lower_case_and_underscored_word)
-  {
-    $tmp = $lower_case_and_underscored_word;
-    $tmp = sfToolkit::pregtr($tmp, array('#/(.?)#e'    => "'::'.strtoupper('\\1')",
-                                         '/(^|_|-)+(.)/e' => "strtoupper('\\2')"));
+    public static function camelize($lower_case_and_underscored_word)
+    {
+        $tmp = $lower_case_and_underscored_word;
+        $tmp = sfToolkit::pregtr_callback(
+                        $tmp,
+                        array(
+                             '#/(.?)#' => function ($m) {
+                                     return '::' . strtoupper($m[1]);
+                                 },
+                             '/(^|_|-)+(.)/' => function ($m) {
+                                     return strtoupper($m[2]);
+                                 }
+                        )
+        );
 
-    return $tmp;
-  }
+        return $tmp;
+    }
 
   /**
    * Returns an underscore-syntaxed version or the CamelCased string.
@@ -41,15 +50,25 @@ class sfInflector
    *
    * @return string Underscored string.
    */
-  public static function underscore($camel_cased_word)
-  {
-    $tmp = $camel_cased_word;
-    $tmp = str_replace('::', '/', $tmp);
-    $tmp = sfToolkit::pregtr($tmp, array('/([A-Z]+)([A-Z][a-z])/' => '\\1_\\2',
-                                         '/([a-z\d])([A-Z])/'     => '\\1_\\2'));
+    public static function underscore($camel_cased_word)
+    {
+        $tmp = $camel_cased_word;
+        $tmp = str_replace('::', '/', $tmp);
 
-    return strtolower($tmp);
-  }
+        $tmp = sfToolkit::pregtr_callback(
+                        $tmp,
+                        array(
+                             '/([A-Z]+)([A-Z][a-z])/' => function ($m) {
+                                     return $m[1] . '_' . $m[2];
+                                 },
+                             '/([a-z\d])([A-Z])/' => function ($m) {
+                                     return $m[1] . '_' . $m[2];
+                                 }
+                        )
+        );
+
+        return strtolower($tmp);
+    }
 
   /**
    * Returns classname::module with classname:: stripped off.

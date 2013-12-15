@@ -321,10 +321,20 @@ abstract class sfFormFilterDoctrine extends sfFormFilter
     return $this->getTable()->getFieldName($colName);
   }
 
-  protected function camelize($text)
-  {
-    return sfToolkit::pregtr($text, array('#/(.?)#e' => "'::'.strtoupper('\\1')", '/(^|_|-)+(.)/e' => "strtoupper('\\2')"));
-  }
+    protected function camelize($text)
+    {
+        return sfToolkit::pregtr_callback(
+                        $text,
+                        array(
+                             '#/(.?)#' => function ($m) {
+                                     return '::' . strtoupper($m[1]);
+                                 },
+                             '/(^|_|-)+(.)/' => function ($m) {
+                                     return strtoupper($m[2]);
+                                 }
+                        )
+        );
+    }
 
   protected function getTable()
   {
