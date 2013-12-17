@@ -1086,7 +1086,7 @@ class Doctrine_Import_Builder extends Doctrine_Builder
         $code = sprintf("    /**
      * Returns an instance of this class.
      *
-     * @return object %s
+     * @return %s
      */
     public static function getInstance()
     {

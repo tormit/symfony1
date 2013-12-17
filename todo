@@ -1,4 +1,24 @@
-1) remove Propel - done
-2) old fixes
+1) remove Propel - DONE
+2) Symfony code needed patches (see below)
 3) fixes for php5.4
 4) fixes for php5.5
+
+
+Symfony code needed patches:
+
+sfWebDebugLogger.class.php
+    1) commit:   - prevent from overriding ProjectConfiguration::exception_error_handler()
+
+lib\plugins\sfDoctrinePlugin\lib\vendor\doctrine\Doctrine\Data\Import.php
+    1) commit:   - catch exceptions and display them
+    2) commit:   - log data loadings
+
+lib\plugins\sfDoctrinePlugin\lib\vendor\doctrine\Doctrine\Import\Builder.php @ 2nd November 2012
+  1) 1077 - * @return object %s -> * @return %s -   DONE
+
+
+sfFilecache::clean():
+    1) if (is_writable($file)){
+        $result = @unlink($file) && $result;
+       }
+       -	DONE
