@@ -1149,6 +1149,7 @@ abstract class Doctrine_Query_Abstract
         $copy->free();
 
         if ($componentsBefore !== $componentsAfter) {
+            // Credits: https://github.com/doctrine/doctrine1/pull/50
             return array_diff_assoc($componentsAfter, $componentsBefore);
         } else {
             return $componentsAfter;
