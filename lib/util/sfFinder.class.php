@@ -665,7 +665,7 @@ class sfGlobToRegex
         $first_byte = true;
       }
 
-      if ($car === '.' || $car === '(' || $car === ')' || $car === '|' || $car === '+' || $car === '^' || $car === '$')
+      if ($car === '.' || $car === '(' || $car === ')' || $car === '|' || $car === '+' || $car === '^' || $car === '$' || $car === "#")
       {
         $regex .= "\\$car";
       }
