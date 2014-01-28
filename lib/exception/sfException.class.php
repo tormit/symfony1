@@ -301,16 +301,18 @@ class sfException extends Exception
     {
       $lineFormat = '%sat %s%s%s(%s) in %s line %s';
     }
-      $sfLibDir = sfConfig::get('sf_symfony_lib_dir');
+
+    $sfLibDir = dirname(dirname(__FILE__)); //sfConfig::get('sf_symfony_lib_dir','');
     for ($i = 0, $count = count($traceData); $i < $count; $i++)
     {
       $line = isset($traceData[$i]['line']) ? $traceData[$i]['line'] : null;
       $file = isset($traceData[$i]['file']) ? $traceData[$i]['file'] : null;
       $args = isset($traceData[$i]['args']) ? $traceData[$i]['args'] : array();
-      $color = '';
-      if ($format == 'html') {
-        $color = stripos((string)$file, $sfLibDir) === 0 ? 'black' : 'red';
-      }
+        if ($format == 'html') {
+            $color = stripos((string)$file, $sfLibDir) === 0 ? 'black' : 'red';
+        } else {
+            $color = stripos((string)$file, $sfLibDir) === 0 ? '' : '!!!!! ';
+        }
       $traces[] = sprintf($lineFormat,
         $color,
         (isset($traceData[$i]['class']) ? $traceData[$i]['class'] : ''),
