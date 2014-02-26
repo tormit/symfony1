@@ -30,7 +30,7 @@ class sfGenerateModuleTask extends sfGeneratorBaseTask
     $this->addArguments(array(
       new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application name'),
       new sfCommandArgument('module', sfCommandArgument::REQUIRED, 'The module name'),
-      new sfCommandArgument('component_action', sfCommandArgument::OPTIONAL, 'The component default action', 'Default'),
+      new sfCommandArgument('component_action', sfCommandArgument::OPTIONAL, 'The component default action', 'Render'),
     ));
 
     $this->namespace = 'generate';
@@ -110,7 +110,7 @@ EOF;
 
     // make component template
     file_put_contents(
-      $moduleDir . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . '_' . $componentAction . '.php',
+      $moduleDir . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . '_' . lcfirst($componentAction) . '.php',
       $componentAction . ' content'
     );
 
