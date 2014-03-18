@@ -276,8 +276,18 @@ abstract class sfFormObject extends BaseForm
     return parent::renderFormTag($url, $attributes);
   }
 
-  protected function camelize($text)
-  {
-    return preg_replace(array('#/(.?)#e', '/(^|_|-)+(.)/e'), array("'::'.strtoupper('\\1')", "strtoupper('\\2')"), $text);
-  }
+    protected function camelize($text)
+    {
+        return sfToolkit::pregtr_callback(
+                        $text,
+                        array(
+                            '#/(.?)#' => function ($m) {
+                                    return strtoupper($m[1]);
+                                },
+                            '/(^|_|-)+(.)/' => function ($m) {
+                                    return strtoupper($m[2]);
+                                }
+                        )
+        );
+    }
 }
