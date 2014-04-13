@@ -2084,7 +2084,9 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
                 foreach ($this->_sqlParts['select'] as $field) {
                     // We only include aggregate expressions to count query
                     // This is needed because HAVING clause will use field aliases
-                    if (strpos($field, '(') !== false) {
+                    preg_match('/([\w\.]+) AS ([\w\.]+)/i', $field, $matches);
+                    $fieldReal = $matches[1];
+                    if (strpos($field, '(') !== false || stripos($having, $fieldReal) !== false) {
                         $selectFields .= ', ' . $field;
                     }
                 }
