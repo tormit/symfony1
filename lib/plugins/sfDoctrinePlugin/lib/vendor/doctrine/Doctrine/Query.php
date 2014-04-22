@@ -861,10 +861,13 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
 
         // check for possible subqueries
         if (substr($trimmed, 0, 4) == 'FROM' || substr($trimmed, 0, 6) == 'SELECT') {
-            // parse subquery
-            $q = $this->createSubquery()->parseDqlQuery($trimmed);
-            $trimmed = $q->getSqlQuery();
-            $q->free();
+            $replcaedWs = preg_replace('/\s+/i', ' ', $trimmed);
+            if (stripos($replcaedWs, 'FROM (SELECT') === false) {
+                // parse subquery
+                $q = $this->createSubquery()->parseDqlQuery($trimmed);
+                $trimmed = $q->getSqlQuery();
+                $q->free();
+            }
         } else if (substr($trimmed, 0, 4) == 'SQL:') {
             $trimmed = substr($trimmed, 4);
         } else {
