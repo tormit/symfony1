@@ -65,6 +65,6 @@ Failed 20/214 test scripts, 90.65% okay. 20/5864 subtests failed, 99.66% okay.
 ---------------
 _PHP 5.5_
 
-*Doctrine - allow SQL subqueries in select*
+*doctrine array-diff issue(community fix)*
 
 Failed 20/214 test scripts, 90.65% okay. 20/5864 subtests failed, 99.66% okay.
