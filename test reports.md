@@ -54,7 +54,15 @@ _PHP 5.5_
 Failed 20/214 test scripts, 90.65% okay. 20/5864 subtests failed, 99.66% okay.
 
 22nd aprill 2014
---------------
+----------------
+_PHP 5.5_
+
+*Doctrine - allow SQL subqueries in select*
+
+Failed 20/214 test scripts, 90.65% okay. 20/5864 subtests failed, 99.66% okay.
+
+6th August 2014
+---------------
 _PHP 5.5_
 
 *Doctrine - allow SQL subqueries in select*
