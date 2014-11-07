@@ -68,3 +68,12 @@ _PHP 5.5_
 *doctrine array-diff issue(community fix)*
 
 Failed 20/214 test scripts, 90.65% okay. 20/5864 subtests failed, 99.66% okay.
+
+8th November 2014
+---------------
+_PHP 5.5_
+
+*doctrine query backtrace*
+
+Failed 20/214 test scripts, 90.65% okay. 20/5864 subtests failed, 99.66% okay.
+

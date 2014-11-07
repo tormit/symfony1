@@ -1,6 +1,15 @@
 Fork of Symfony 1.4
 ===================
 
+UPDATES
+===================
+6th November 2014
+-------------------
+* New options in settings.yml
+    * query_backtrace - Enables query backtrace
+    * query_backtrace_full - Backtrace includes symfony core.
+
+
 
 LICENSE
 ===================

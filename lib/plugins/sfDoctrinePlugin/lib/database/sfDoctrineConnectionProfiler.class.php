@@ -64,10 +64,22 @@ class sfDoctrineConnectionProfiler extends Doctrine_Connection_Profiler
    */
   public function preQuery(Doctrine_Event $event)
   {
-    if ($this->options['logging'])
-    {
-      $this->dispatcher->notify(new sfEvent($event->getInvoker(), 'application.log', array(sprintf('query : %s - (%s)', $event->getQuery(), join(', ', self::fixParams($event->getParams()))))));
-    }
+      if ($this->options['logging']) {
+          $this->dispatcher->notify(
+              new sfEvent(
+                  $event->getInvoker(), 'application.log',
+                  array(
+                      sprintf(
+                          "query : %s - (%s). \nQuery backtrace:\n%s",
+                          $event->getQuery(),
+                          join(', ', self::fixParams($event->getParams())),
+                          $this->getBacktrace()
+                      )
+                  )
+              )
+          );
+      }
+
 
     sfTimerManager::getTimer('Database (Doctrine)');
 
@@ -100,10 +112,21 @@ class sfDoctrineConnectionProfiler extends Doctrine_Connection_Profiler
    */
   public function preExec(Doctrine_Event $event)
   {
-    if ($this->options['logging'])
-    {
-      $this->dispatcher->notify(new sfEvent($event->getInvoker(), 'application.log', array(sprintf('exec : %s - (%s)', $event->getQuery(), join(', ', self::fixParams($event->getParams()))))));
-    }
+      if ($this->options['logging']) {
+          $this->dispatcher->notify(
+              new sfEvent(
+                  $event->getInvoker(), 'application.log',
+                  array(
+                      sprintf(
+                          "exec : %s - (%s). \nQuery backtrace:\n%s",
+                          $event->getQuery(),
+                          join(', ', self::fixParams($event->getParams())),
+                          $this->getBacktrace()
+                      )
+                  )
+              )
+          );
+      }
 
     sfTimerManager::getTimer('Database (Doctrine)');
 
@@ -136,10 +159,21 @@ class sfDoctrineConnectionProfiler extends Doctrine_Connection_Profiler
    */
   public function preStmtExecute(Doctrine_Event $event)
   {
-    if ($this->options['logging'])
-    {
-      $this->dispatcher->notify(new sfEvent($event->getInvoker(), 'application.log', array(sprintf('execute : %s - (%s)', $event->getQuery(), join(', ', self::fixParams($event->getParams()))))));
-    }
+      if ($this->options['logging']) {
+          $this->dispatcher->notify(
+              new sfEvent(
+                  $event->getInvoker(), 'application.log',
+                  array(
+                      sprintf(
+                          "execute : %s - (%s). \nQuery backtrace:\n%s",
+                          $event->getQuery(),
+                          join(', ', self::fixParams($event->getParams())),
+                          $this->getBacktrace()
+                      )
+                  )
+              )
+          );
+      }
 
     sfTimerManager::getTimer('Database (Doctrine)');
 
@@ -203,4 +237,41 @@ class sfDoctrineConnectionProfiler extends Doctrine_Connection_Profiler
 
     return $params;
   }
+
+    /**
+     * @return bool|string
+     */
+    protected function getBacktrace()
+    {
+        $rootDir = sfConfig::get('sf_root_dir');
+        $backtraceString = '';
+
+        if ($this->options['query_backtrace']) {
+            $appTrace = debug_backtrace();
+            if (!$this->options['query_backtrace_full']) {
+                $appTrace = array_filter(
+                    $appTrace,
+                    function ($row) {
+                        if (isset($row['file']) && stripos($row['file'], 'lib/vendor/symfony/lib') > 0) {
+                            return false;
+                        }
+                        return true;
+                    }
+                );
+            }
+
+            foreach ($appTrace as $index => $row) {
+                $source = '';
+                if (isset($row['file'])) {
+                    $source = $row['file'] . '::' . $row['line'];
+                } elseif (isset($row['class'])) {
+                    $source = $row['class'] . '::' . $row['function'];
+                }
+                $backtraceString .= sprintf("%s <- \n", str_replace($rootDir, '', $source));
+            }
+            return $backtraceString;
+        }
+
+        return $backtraceString;
+    }
 }
