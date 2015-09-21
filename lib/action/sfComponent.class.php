@@ -173,7 +173,7 @@ abstract class sfComponent
    *
    * <code>$this->getContext()->getRequest()</code>
    *
-   * @return sfRequest The current sfRequest implementation instance
+   * @return sfWebRequest The current sfRequest implementation instance
    */
   public function getRequest()
   {
@@ -187,7 +187,7 @@ abstract class sfComponent
    *
    * <code>$this->getContext()->getResponse()</code>
    *
-   * @return sfResponse The current sfResponse implementation instance
+   * @return sfWebResponse The current sfResponse implementation instance
    */
   public function getResponse()
   {
