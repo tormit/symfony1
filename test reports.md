@@ -77,3 +77,11 @@ _PHP 5.5_
 
 Failed 20/214 test scripts, 90.65% okay. 20/5864 subtests failed, 99.66% okay.
 
+28th September 2015
+---------------
+_PHP 5.6_
+
+*redirect backtrace*
+
+Failed 25/214 test scripts, 88.32% okay. 22/5194 subtests failed, 99.58% okay.
+

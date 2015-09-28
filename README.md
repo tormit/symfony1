@@ -10,6 +10,12 @@ UPDATES
     * query_backtrace_full - Backtrace includes symfony core.
 
 
+28th September 2015
+-------------------
+* New options in settings.yml
+    * redirect_backtrace - Traces redirects initiated from \sfWebController::redirect
+
+
 
 LICENSE
 ===================

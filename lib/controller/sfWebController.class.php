@@ -189,6 +189,15 @@ abstract class sfWebController extends sfController
       $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Redirect to "%s"', $url))));
     }
 
+    if (sfConfig::get('sf_redirect_backtrace')) {
+      $this->dispatcher->notify(
+          new sfEvent(
+              $this, 'application.log',
+              array(sprintf("Redirect backtrace:\n %s", $this->getBacktrace()))
+          )
+      );
+    }
+
     // redirect
     $response = $this->context->getResponse();
     $response->clearHttpHeaders();
@@ -203,5 +212,28 @@ abstract class sfWebController extends sfController
 
     $response->setContent(sprintf('<html><head><meta http-equiv="refresh" content="%d;url=%s"/></head></html>', $delay, htmlspecialchars($url, ENT_QUOTES, sfConfig::get('sf_charset'))));
     $response->send();
+  }
+
+  /**
+   * @return bool|string
+   */
+  protected function getBacktrace()
+  {
+    $rootDir = sfConfig::get('sf_root_dir');
+    $backtraceString = '';
+
+    $appTrace = debug_backtrace();
+
+    foreach ($appTrace as $index => $row) {
+      $source = '';
+      if (isset($row['file'])) {
+        $source = $row['file'] . '::' . $row['line'];
+      } elseif (isset($row['class'])) {
+        $source = $row['class'] . '::' . $row['function'];
+      }
+      $backtraceString .= sprintf("%s <- \n", str_replace($rootDir, '', $source));
+    }
+
+    return $backtraceString;
   }
 }
