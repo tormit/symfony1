@@ -14,6 +14,11 @@ UPDATES
 -------------------
 * New options in settings.yml
     * redirect_backtrace - Traces redirects initiated from \sfWebController::redirect
+    
+24th October 2015
+-------------------
+* Updated Doctrine form filter. Added abstract version of _addDateQuery()_ method called _abstractAddDateQuery()_. 
+Can be used in your custom date filters in _addXxxxxDateQuery()_ methods.
 
 
 
