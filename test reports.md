@@ -93,3 +93,11 @@ _PHP 5.6_
 
 Failed 25/214 test scripts, 88.32% okay. 22/5194 subtests failed, 99.58% okay.
 
+16th November 2015
+---------------
+_PHP 5.6_
+
+*Updated Doctrine collection.*
+
+Failed 25/214 test scripts, 88.32% okay. 22/5194 subtests failed, 99.58% okay.
+

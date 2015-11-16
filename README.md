@@ -21,6 +21,10 @@ UPDATES
 Can be used in your custom date filters in _addXxxxxDateQuery()_ methods.
 
 
+16th November 2015
+-------------------
+* Updated Doctrine collection. Added _\Doctrine_Collection::filter()_ to filter records by callback.
+
 
 LICENSE
 ===================
